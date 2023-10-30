@@ -1,9 +1,13 @@
 import './App.css';
+import Clinics from './Clinics';
+import Patients from './Patients';
 
-import { Clinics } from './Clinics';
 function App() {
-  return (
-      <Clinics />
+    return (
+        <div>
+            <Clinics />
+            <Patients />
+        </div>
   );
 }
 
