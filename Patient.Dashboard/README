@@ -1,0 +1,17 @@
+Work covers both the backend and frontend requirements of the task. 
+
+Both Clinics and Patients data is handled in the same component; with more time would have split the clinic patients
+into a child component. Would also have increased test coverage.
+
+Cors settings would be moved into configuration.
+
+I would have preferred to write the tests as functional tests that actually call the endpoints if i had more time. 
+I was hampered by lack of a startup class in the scaffolded code, which made this more challenging and i reverted to 
+unit tests.
+
+I used the csvhelper library (https://joshclose.github.io/CsvHelper/) to parse data from csv into objects. 
+With more time would have moved the csv files into a separate data project where the parsing would be done, like an ORM.
+I would have also split out the csvhelper map classes into separate files and made the maps configurable, as well as 
+the file names.
+
+I would also have placed code under a src folder in github
