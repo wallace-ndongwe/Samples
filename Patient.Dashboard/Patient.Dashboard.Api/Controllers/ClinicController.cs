@@ -14,8 +14,8 @@ public class ClinicController : ControllerBase
         _dataAccess = dataAccess;
     }
     [HttpGet]
-    public IEnumerable<Models.Clinic> Get()
+    public async Task<IEnumerable<Models.Clinic>> Get()
     {
-        return _dataAccess.GetClinics();
+        return await _dataAccess.GetClinics();
     }
 }

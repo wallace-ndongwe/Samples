@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections;
+using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Patient.Dashboard.Models;
@@ -7,26 +8,39 @@ namespace Patient.Dashboard.Repository;
 
 public class DataAccess: IDataAccess
 {
-    public IEnumerable<Models.Patient> GetPatients()
+    public async Task<IEnumerable<Models.Patient>> GetPatients()
     {
-        var clinic1Patients = GetRecords<Models.Patient>("patients-1.csv");
-        var clinic2Patients = GetRecords<Models.Patient>("patients-2.csv");
+        var clinic1Patients = await GetRecords<Models.Patient>("patients-1.csv");
+        var clinic2Patients = await GetRecords<Models.Patient>("patients-2.csv");
         return clinic1Patients.Concat(clinic2Patients);
     }
 
-    public IEnumerable<Clinic> GetClinics()
+    public async Task<IEnumerable<Models.Patient>> GetPatientsByClinicId(int clinicId)
     {
-        return GetRecords<Clinic>("clinics.csv");
+        return await GetRecords<Models.Patient>($"patients-{clinicId}.csv");
     }
 
-    private IEnumerable<T> GetRecords<T>(string filePath)
+    public async Task<IEnumerable<Clinic>> GetClinics()
     {
-        using (var reader = new StreamReader($"bin\\Debug\\net6.0\\Data\\{filePath}"))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        return await GetRecords<Clinic>("clinics.csv");
+    }
+
+    private async Task<IEnumerable<T>> GetRecords<T>(string filePath)
+    {
+        try
         {
-            csv.Context.RegisterClassMap<PatientMap>();
-            csv.Context.RegisterClassMap<ClinicMap>();
-            return csv.GetRecords<T>().ToList();
+            using (var reader = new StreamReader($"bin\\Debug\\net6.0\\Data\\{filePath}"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Context.RegisterClassMap<PatientMap>();
+                csv.Context.RegisterClassMap<ClinicMap>();
+                return csv.GetRecords<T>().ToList();
+            }
+        }
+
+        catch
+        {
+            return new List<T>();
         }
     }
 }

@@ -50,11 +50,11 @@ public class PatientControllerTests
             }
         };
         var dataAccess = new Mock<IDataAccess>();
-        dataAccess.Setup(_ => _.GetPatients()).Returns(expectedPatients);
+        dataAccess.Setup(_ => _.GetPatients()).ReturnsAsync(expectedPatients);
 
         var controller = new PatientController(dataAccess.Object);
        
-        var response = controller.Get();
+        var response = await controller.Get();
         
         response.Should().BeEquivalentTo(expectedPatients);
     }

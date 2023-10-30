@@ -13,9 +13,17 @@ public class PatientController : ControllerBase
     {
         _dataAccess = dataAccess;
     }
+
     [HttpGet]
-    public IEnumerable<Models.Patient> Get()
+    public async Task<IEnumerable<Models.Patient>> Get()
     {
-        return _dataAccess.GetPatients();
+        return await _dataAccess.GetPatients();
+    }
+
+    [HttpGet]
+    [Route("/Patient/{clinicId}")]
+    public async Task<IEnumerable<Models.Patient>> GetByClinicId(int clinicId)
+    {
+        return await _dataAccess.GetPatientsByClinicId(clinicId);
     }
 }

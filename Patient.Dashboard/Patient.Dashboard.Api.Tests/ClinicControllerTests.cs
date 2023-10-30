@@ -19,20 +19,20 @@ public class ClinicControllerTests
             new Clinic
             {
                 Id = 1,
-                Name = "Salve Fertility"
+                Name = "London East"
             },
             new Clinic
             {
                 Id = 2,
-                Name = "London IVF"
+                Name = "London West"
             }
         };
         var dataAccess = new Mock<IDataAccess>();
-        dataAccess.Setup(_ => _.GetClinics()).Returns(expectedClinics);
+        dataAccess.Setup(_ => _.GetClinics()).ReturnsAsync(expectedClinics);
 
         var controller = new ClinicController(dataAccess.Object);
        
-        var response = controller.Get();
+        var response = await controller.Get();
         
         response.Should().BeEquivalentTo(expectedClinics);
     }
