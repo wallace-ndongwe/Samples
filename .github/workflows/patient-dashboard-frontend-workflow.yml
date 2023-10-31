@@ -13,7 +13,9 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
+        working-directory: ./Patient.Dashboard/src
       - run: npm test
+        working-directory: ./Patient.Dashboard/src
 
   publish-gpr:
     needs: build
@@ -28,6 +30,8 @@ jobs:
           node-version: 16
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
+        working-directory: ./Patient.Dashboard/src
       - run: npm publish
+        working-directory: ./Patient.Dashboard/src
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
