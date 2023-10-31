@@ -1,4 +1,4 @@
-name: UI Node.js Package
+name: Patient Dashboard Frontend CI/CD
 
 on:
   release:

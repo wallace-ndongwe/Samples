@@ -1,4 +1,4 @@
-name: Backend workflow
+name: Patient Dashboard Backend CI
 
 on:
   push:
